@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Temporary Power Request During Shutdown</title>
+<style>
+*{box-sizing:border-box;font-family:Arial, sans-serif;margin:0;padding:0}
+body{background:#f3f4f6;padding:16px;color:#1f2937}
+.container{max-width:720px;margin:0 auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px #00000012}
+h1{font-size:22px;margin-bottom:6px;color:#111827}
+.subtitle{color:#4b5563;margin-bottom:24px;font-size:14px}
+.section{margin-bottom:22px;border-top:1px solid #e5e7eb;padding-top:16px}
+.section:first-of-type{border-top:none;padding-top:0}
+.section h2{font-size:17px;margin-bottom:14px;color:#1f2937}
+.form-row{margin-bottom:14px}
+label{display:block;margin-bottom:6px;font-weight:500;font-size:14px}
+input, select, textarea{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:8px;font-size:16px}
+textarea{min-height:90px;resize:vertical}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.two-col{grid-template-columns:1fr}}
+.check-row{display:flex;gap:8px;align-items:flex-start;margin-top:8px}
+.check-row input{width:auto;margin-top:4px}
+.btns{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+button{flex:1;padding:13px;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}
+.btn-submit{background:#2563eb;color:#fff}
+.btn-reset{background:#e5e7eb;color:#1f2937}
+.note{font-size:13px;color:#6b7280;margin-top:6px}
+.success{display:none;background:#dcfce7;color:#166534;padding:14px;border-radius:8px;margin-bottom:18px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="success" id="successMsg">✅ Form submitted successfully. We will review your temporary power request.</div>
+  <h1>Temporary Power Request During Shutdown</h1>
+  <div class="subtitle">For residents to apply for temporary power supply when there is a planned power shutdown</div>
+
+  <!-- 1. Resident Particulars -->
+  <div class="section">
+    <h2>1. Resident Particulars</h2>
+    <div class="two-col">
+      <div class="form-row">
+        <label>Full Name</label>
+        <input type="text" id="fullname" required>
+      </div>
+      <div class="form-row">
+        <label>NRIC / FIN No.</label>
+        <input type="text" id="idno" required>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="form-row">
+        <label>Contact Number</label>
+        <input type="tel" id="hp" required>
+      </div>
+      <div class="form-row">
+        <label>Email Address</label>
+        <input type="email" id="email">
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Premise Details -->
+  <div class="section">
+    <h2>2. Premise Details</h2>
+    <div class="form-row">
+      <label>Full Address (Block / Unit / Postal Code)</label>
+      <textarea id="address" required></textarea>
+    </div>
+    <div class="two-col">
+      <div class="form-row">
+        <label>Premise Type</label>
+        <select id="premiseType" required>
+          <option value="">Select</option>
+          <option>HDB Flat</option>
+          <option>Private Apartment</option>
+          <option>Landed House</option>
+          <option>Others</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Electricity Account No.</label>
+        <input type="text" id="accNo">
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Shutdown Information -->
+  <div class="section">
+    <h2>3. Planned Shutdown Information</h2>
+    <div class="two-col">
+      <div class="form-row">
+        <label>Shutdown Start Date & Time</label>
+        <input type="datetime-local" id="sdStart" required>
+      </div>
+      <div class="form-row">
+        <label>Shutdown End Date & Time</label>
+        <input type="datetime-local" id="sdEnd" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Reason for Shutdown</label>
+      <select id="sdReason">
+        <option value="">Select</option>
+        <option>Planned maintenance</option>
+        <option>Cable upgrading work</option>
+        <option>Installation / replacement of electrical equipment</option>
+        <option>Others</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Remarks on Shutdown</label>
+      <textarea id="sdRemarks"></textarea>
+    </div>
+  </div>
+
+  <!-- 4. Temporary Power Requirement -->
+  <div class="section">
+    <h2>4. Temporary Power Requirement</h2>
+    <div class="two-col">
+      <div class="form-row">
+        <label>Required Load (kW)</label>
+        <input type="number" step="0.01" id="loadKw">
+      </div>
+      <div class="form-row">
+        <label>Supply Arrangement Type</label>
+        <select id="supplyType">
+          <option value="">Select</option>
+          <option>Temporary generator set</option>
+          <option>Portable UPS</option>
+          <option>Alternative feeder supply</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Equipment that needs power (e.g. medical device, fridge, life support)</label>
+      <textarea id="equipList" required></textarea>
+    </div>
+    <div class="form-row">
+      <label>Special Needs (Medical / Elderly / Disabled)</label>
+      <textarea id="specialNeed"></textarea>
+    </div>
+  </div>
+
+  <!-- 5. Safety Declaration & Consent -->
+  <div class="section">
+    <h2>5. Safety Declaration & Consent</h2>
+    <div class="check-row">
+      <input type="checkbox" id="declaration" required>
+      <label for="declaration">I confirm all information provided is true. I understand temporary power carries electrical hazards and I shall comply with all safety instructions. I consent to the authorised team contacting me for this request.</label>
+    </div>
+    <p class="note">* False declaration may result in rejection of application and safety liabilities.</p>
+  </div>
+
+  <div class="btns">
+    <button class="btn-submit" id="submitBtn">Submit Request</button>
+    <button class="btn-reset" type="reset">Reset Form</button>
+  </div>
+</div>
+
+<script>
+const form = document.querySelector('form') || document.body;
+const successMsg = document.getElementById('successMsg');
+document.getElementById('submitBtn').onclick = function(){
+  const reqFields = document.querySelectorAll('[required]');
+  let ok = true;
+  reqFields.forEach(el=>{
+    if(!el.value.trim()){ok=false;el.style.borderColor='#ef4444'}
+    else el.style.borderColor='#d1d5db';
+  })
+  if(!ok){alert('Please fill in all required fields.');return}
+  // In real deployment: send data to backend / API here
+  successMsg.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  form.reset();
+}
+</script>
+</body>
+</html>
